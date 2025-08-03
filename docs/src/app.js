@@ -65,10 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
   group2Select.addEventListener('change', () => onGroupChange(group2Select, group2Display));
   group3Select.addEventListener('change', () => onGroupChange(group3Select, group3Display));
 
-  onGroupChange(group1Select, group1Display);
-  onGroupChange(group2Select, group2Display);
-  onGroupChange(group3Select, group3Display);
-  updateDoorList();
+  resetForm();
 
   function resetForm() {
     [group1Select, group2Select, group3Select].forEach((select) => {
