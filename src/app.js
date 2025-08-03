@@ -25,4 +25,15 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize displays
   onRoleChange();
   onGroupChange();
+
+  function resetForm() {
+    roleSelect.selectedIndex = -1;
+    groupSelect.selectedIndex = -1;
+    roleDisplay.className = 'color-box';
+    groupDisplay.className = 'color-box';
+    roleDisplay.removeAttribute('style');
+    groupDisplay.removeAttribute('style');
+  }
+
+  window.resetForm = resetForm;
 });
