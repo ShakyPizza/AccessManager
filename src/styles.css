@@ -39,11 +39,6 @@ select {
   background-color: #ddd;
 }
 
-/* Role colors */
-.role-admin { background-color: #e74c3c; }
-.role-employee { background-color: #3498db; }
-.role-visitor { background-color: #2ecc71; }
-
 /* Group colors */
 .group-a { background-color: #f1c40f; }
 .group-b { background-color: #9b59b6; }

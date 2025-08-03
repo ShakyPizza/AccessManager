@@ -1,50 +1,45 @@
-import { roles } from './data/roles.js';
 import { groups } from './data/groups.js';
 import { updateColor } from './updateColor.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-  const roleSelect = document.getElementById('role-select');
-  const groupSelect = document.getElementById('group-select');
-  const roleDisplay = document.getElementById('role-display');
-  const groupDisplay = document.getElementById('group-display');
+  const group1Select = document.getElementById('group1-select');
+  const group2Select = document.getElementById('group2-select');
+  const group3Select = document.getElementById('group3-select');
+  const group1Display = document.getElementById('group1-display');
+  const group2Display = document.getElementById('group2-display');
+  const group3Display = document.getElementById('group3-display');
 
-  roles.forEach((role) => {
-    const option = document.createElement('option');
-    option.value = role.value;
-    option.textContent = role.label;
-    roleSelect.appendChild(option);
+  [group1Select, group2Select, group3Select].forEach((select) => {
+    groups.forEach((group) => {
+      const option = document.createElement('option');
+      option.value = group.value;
+      option.textContent = group.label;
+      select.appendChild(option);
+    });
   });
 
-  groups.forEach((group) => {
-    const option = document.createElement('option');
-    option.value = group.value;
-    option.textContent = group.label;
-    groupSelect.appendChild(option);
-  });
-
-  function onRoleChange() {
-    const role = roles.find((r) => r.value === roleSelect.value);
-    updateColor(roleDisplay, role && role.color);
+  function onGroupChange(select, display) {
+    const group = groups.find((g) => g.value === select.value);
+    updateColor(display, group && group.color);
   }
 
-  function onGroupChange() {
-    const group = groups.find((g) => g.value === groupSelect.value);
-    updateColor(groupDisplay, group && group.color);
-  }
+  group1Select.addEventListener('change', () => onGroupChange(group1Select, group1Display));
+  group2Select.addEventListener('change', () => onGroupChange(group2Select, group2Display));
+  group3Select.addEventListener('change', () => onGroupChange(group3Select, group3Display));
 
-  roleSelect.addEventListener('change', onRoleChange);
-  groupSelect.addEventListener('change', onGroupChange);
-
-  onRoleChange();
-  onGroupChange();
+  onGroupChange(group1Select, group1Display);
+  onGroupChange(group2Select, group2Display);
+  onGroupChange(group3Select, group3Display);
 
   function resetForm() {
-    roleSelect.selectedIndex = -1;
-    groupSelect.selectedIndex = -1;
-    roleDisplay.className = 'color-box';
-    groupDisplay.className = 'color-box';
-    roleDisplay.removeAttribute('style');
-    groupDisplay.removeAttribute('style');
+    [group1Select, group2Select, group3Select].forEach((select) => {
+      select.selectedIndex = -1;
+    });
+
+    [group1Display, group2Display, group3Display].forEach((display) => {
+      display.className = 'color-box';
+      display.removeAttribute('style');
+    });
   }
 
   window.resetForm = resetForm;
