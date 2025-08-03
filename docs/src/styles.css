@@ -46,7 +46,7 @@ select {
 .door-list ul {
   list-style: none;
   padding: 0;
-  max-height: 200px;
+  max-height: 800px;
   overflow-y: auto;
   border: 1px solid #eee;
   border-radius: 4px;
