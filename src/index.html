@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Access Manager</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Access Manager</h1>
+
+    <div class="control-group">
+      <label for="role-select">User Role:</label>
+      <select id="role-select">
+        <option value="admin">Admin</option>
+        <option value="employee">Employee</option>
+        <option value="visitor">Visitor</option>
+      </select>
+      <div id="role-display" class="color-box"></div>
+    </div>
+
+    <div class="control-group">
+      <label for="group-select">Door Group:</label>
+      <select id="group-select">
+        <option value="a">Group A</option>
+        <option value="b">Group B</option>
+        <option value="c">Group C</option>
+      </select>
+      <div id="group-display" class="color-box"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
