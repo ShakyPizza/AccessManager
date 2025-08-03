@@ -26,3 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
   onRoleChange();
   onGroupChange();
 });
+
+if (typeof module !== 'undefined') {
+  module.exports = { updateColor };
+}
