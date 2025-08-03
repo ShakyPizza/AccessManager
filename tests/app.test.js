@@ -1,23 +1,15 @@
-const { updateColor } = require('../src/app');
+import { updateColor } from '../src/updateColor.js';
 
 describe('updateColor', () => {
-  test('maps value to corresponding class', () => {
-    const element = {
-      className: 'color-box role-user',
-      classList: { add: jest.fn() },
-    };
-    updateColor(element, 'role-', 'admin');
-    expect(element.className).toBe('color-box');
-    expect(element.classList.add).toHaveBeenCalledWith('role-admin');
+  test('sets provided color on element', () => {
+    const element = { style: { backgroundColor: '' } };
+    updateColor(element, '#123456');
+    expect(element.style.backgroundColor).toBe('#123456');
   });
 
-  test('resets classes when value is empty', () => {
-    const element = {
-      className: 'color-box role-user',
-      classList: { add: jest.fn() },
-    };
-    updateColor(element, 'role-', '');
-    expect(element.className).toBe('color-box');
-    expect(element.classList.add).not.toHaveBeenCalled();
+  test('uses default color when none provided', () => {
+    const element = { style: { backgroundColor: 'red' } };
+    updateColor(element, '');
+    expect(element.style.backgroundColor).toBe('#ddd');
   });
 });
