@@ -39,6 +39,43 @@ select {
   background-color: #ddd;
 }
 
+.door-list {
+  margin-top: 20px;
+}
+
+.door-list ul {
+  list-style: none;
+  padding: 0;
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #eee;
+  border-radius: 4px;
+}
+
+.door-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 8px;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+}
+
+.door-list li:last-child {
+  border-bottom: none;
+}
+
+.group-indicators {
+  display: flex;
+  gap: 4px;
+}
+
+.group-indicators span {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+}
+
 /* Group colors */
 .group-a { background-color: #f1c40f; }
 .group-b { background-color: #9b59b6; }
