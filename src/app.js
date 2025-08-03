@@ -52,3 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.resetForm = resetForm;
 });
+
+if (typeof module !== 'undefined') {
+  module.exports = { updateColor };
+}
