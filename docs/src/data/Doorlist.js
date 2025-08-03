@@ -2,7 +2,7 @@ const rawDoors = [
   ['tengivirki-nordan', 'Tengivirki norðan', ['a']],
   ['haspennuherbergi-1', 'Háspennuherbergi 1', ['a']],
   ['haspennuherbergi-2', 'Háspennuherbergi 2', ['a']],
-  ['askja-taeknirim', 'Askja tæknirými', ['a']],
+  ['askja-taeknirimi', 'Askja tæknirými', ['a']],
   ['thr-11kv-0', 'THR - 11KV 0', ['a']],
   ['thr-11kv-1', 'THR - 11KV 1', ['a']],
   ['thr-11kv-2', 'THR - 11KV 2', ['a']],
