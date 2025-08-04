@@ -18,6 +18,30 @@ const listAOnly = document.getElementById('group-a-only-doors');
 const listAB = document.getElementById('group-ab-doors');
 const listABC = document.getElementById('group-abc-doors');
 
+function getSelectedGroups() {
+  return groupSelects.map((s) => s.value).filter(Boolean);
+}
+
+function updateDoorIndicators() {
+  const selected = getSelectedGroups();
+  document.querySelectorAll('.door-list li').forEach((li) => {
+    const indicators = li.querySelector('.group-indicators');
+    indicators.innerHTML = '';
+
+    const doorGroups = li.dataset.groups.split(',');
+    selected.forEach((value) => {
+      if (doorGroups.includes(value)) {
+        const group = groups.find((g) => g.value === value);
+        if (group) {
+          const span = document.createElement('span');
+          span.style.backgroundColor = group.color;
+          indicators.appendChild(span);
+        }
+      }
+    });
+  });
+}
+
 function populateGroupOptions() {
   groupSelects.forEach((select) => {
     const placeholder = document.createElement('option');
@@ -37,6 +61,7 @@ function populateGroupOptions() {
 function onGroupChange(select, display) {
   const group = groups.find((g) => g.value === select.value);
   updateColor(display, group && group.color);
+  updateDoorIndicators();
 }
 
 function resetForm() {
@@ -47,6 +72,8 @@ function resetForm() {
   displays.forEach((display) => {
     updateColor(display, '');
   });
+
+  updateDoorIndicators();
 }
 
 function populateDoorLists() {
@@ -68,29 +95,12 @@ function populateDoorLists() {
     if (key) {
       const li = document.createElement('li');
       li.textContent = door.label;
+      li.dataset.groups = door.groups.join(',');
 
       const indicators = document.createElement('div');
       indicators.className = 'group-indicators';
-
-      if (hasA) {
-        const spanA = document.createElement('span');
-        spanA.className = 'group-a';
-        indicators.appendChild(spanA);
-      }
-
-      if (hasB) {
-        const spanB = document.createElement('span');
-        spanB.className = 'group-b';
-        indicators.appendChild(spanB);
-      }
-
-      if (hasC) {
-        const spanC = document.createElement('span');
-        spanC.className = 'group-c';
-        indicators.appendChild(spanC);
-      }
-
       li.appendChild(indicators);
+
       lists[key].appendChild(li);
     }
   });
