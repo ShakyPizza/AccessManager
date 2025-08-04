@@ -16,6 +16,6 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
     localStorage.setItem('authenticated', 'true');
     window.location.href = 'index.html';
   } else {
-    document.getElementById('error').textContent = 'Incorrect password';
+    document.getElementById('error').textContent = 'Rangt Lykilorð';
   }
 });
