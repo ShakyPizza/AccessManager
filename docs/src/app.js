@@ -2,15 +2,52 @@ import { groups } from './data/groups.js';
 import { doors } from './data/Doorlist.js';
 import { updateColor } from './updateColor.js';
 
-const group1Select = document.getElementById('group1-select');
-const group2Select = document.getElementById('group2-select');
-const group3Select = document.getElementById('group3-select');
-const group1Display = document.getElementById('group1-display');
-const group2Display = document.getElementById('group2-display');
-const group3Display = document.getElementById('group3-display');
+const groupSelects = [
+  document.getElementById('group1-select'),
+  document.getElementById('group2-select'),
+  document.getElementById('group3-select'),
+];
+
+const displays = [
+  document.getElementById('group1-display'),
+  document.getElementById('group2-display'),
+  document.getElementById('group3-display'),
+];
+
 const listAOnly = document.getElementById('group-a-only-doors');
 const listAB = document.getElementById('group-ab-doors');
 const listABC = document.getElementById('group-abc-doors');
+
+function populateGroupOptions() {
+  groupSelects.forEach((select) => {
+    const placeholder = document.createElement('option');
+    placeholder.value = '';
+    placeholder.textContent = '';
+    select.appendChild(placeholder);
+
+    groups.forEach((group) => {
+      const option = document.createElement('option');
+      option.value = group.value;
+      option.textContent = group.label;
+      select.appendChild(option);
+    });
+  });
+}
+
+function onGroupChange(select, display) {
+  const group = groups.find((g) => g.value === select.value);
+  updateColor(display, group && group.color);
+}
+
+function resetForm() {
+  groupSelects.forEach((select) => {
+    select.value = '';
+  });
+
+  displays.forEach((display) => {
+    updateColor(display, '');
+  });
+}
 
 function populateDoorLists() {
   const lists = { aOnly: listAOnly, ab: listAB, abc: listABC };
@@ -31,79 +68,44 @@ function populateDoorLists() {
     if (key) {
       const li = document.createElement('li');
       li.textContent = door.label;
+
+      const indicators = document.createElement('div');
+      indicators.className = 'group-indicators';
+
+      if (hasA) {
+        const spanA = document.createElement('span');
+        spanA.className = 'group-a';
+        indicators.appendChild(spanA);
+      }
+
+      if (hasB) {
+        const spanB = document.createElement('span');
+        spanB.className = 'group-b';
+        indicators.appendChild(spanB);
+      }
+
+      if (hasC) {
+        const spanC = document.createElement('span');
+        spanC.className = 'group-c';
+        indicators.appendChild(spanC);
+      }
+
+      li.appendChild(indicators);
       lists[key].appendChild(li);
     }
   });
 }
 
-function onGroupChange(select, display) {
-  const group = groups.find((g) => g.value === select.value);
-  updateColor(display, group && group.color);
-}
-
-function resetForm() {
-  [group1Select, group2Select, group3Select].forEach((select) => {
-    select.value = '';
-  });
-
-  [group1Display, group2Display, group3Display].forEach((display) => {
-    updateColor(display, '');
-  });
-}
-
 function init() {
-  [group1Select, group2Select, group3Select].forEach((select) => {
-    const placeholder = document.createElement('option');
-    placeholder.value = '';
-    placeholder.textContent = '';
-    select.appendChild(placeholder);
+  populateGroupOptions();
 
-    groups.forEach((group) => {
-      const option = document.createElement('option');
-      option.value = group.value;
-      option.textContent = group.label;
-      select.appendChild(option);
-    });
+  groupSelects.forEach((select, idx) => {
+    select.addEventListener('change', () => onGroupChange(select, displays[idx]));
   });
-
-  function populateDoorLists() {
-    const lists = { a: listA, b: listB, c: listC };
-    Object.entries(lists).forEach(([groupValue, ul]) => {
-      ul.innerHTML = '';
-      doors
-        .filter((door) => door.groups.includes(groupValue))
-        .forEach((door) => {
-          const li = document.createElement('li');
-          li.textContent = door.label;
-          ul.appendChild(li);
-        });
-    });
-  }
-
-  function onGroupChange(select, display) {
-    const group = groups.find((g) => g.value === select.value);
-    updateColor(display, group && group.color);
-  }
-
-  group1Select.addEventListener('change', () => onGroupChange(group1Select, group1Display));
-  group2Select.addEventListener('change', () => onGroupChange(group2Select, group2Display));
-  group3Select.addEventListener('change', () => onGroupChange(group3Select, group3Display));
 
   populateDoorLists();
   resetForm();
+}
 
-  function resetForm() {
-    [group1Select, group2Select, group3Select].forEach((select) => {
-      select.selectedIndex = -1;
-    });
-
-    [group1Display, group2Display, group3Display].forEach((display) => {
-      display.className = 'color-box';
-      display.removeAttribute('style');
-    });
-
-  }
-
-  window.resetForm = resetForm;
-};
-
+init();
+window.resetForm = resetForm;
