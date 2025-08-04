@@ -66,14 +66,44 @@ function init() {
     });
   });
 
+  function populateDoorLists() {
+    const lists = { a: listA, b: listB, c: listC };
+    Object.entries(lists).forEach(([groupValue, ul]) => {
+      ul.innerHTML = '';
+      doors
+        .filter((door) => door.groups.includes(groupValue))
+        .forEach((door) => {
+          const li = document.createElement('li');
+          li.textContent = door.label;
+          ul.appendChild(li);
+        });
+    });
+  }
+
+  function onGroupChange(select, display) {
+    const group = groups.find((g) => g.value === select.value);
+    updateColor(display, group && group.color);
+  }
+
   group1Select.addEventListener('change', () => onGroupChange(group1Select, group1Display));
   group2Select.addEventListener('change', () => onGroupChange(group2Select, group2Display));
   group3Select.addEventListener('change', () => onGroupChange(group3Select, group3Display));
 
   populateDoorLists();
   resetForm();
-}
 
-init();
-window.resetForm = resetForm;
+  function resetForm() {
+    [group1Select, group2Select, group3Select].forEach((select) => {
+      select.selectedIndex = -1;
+    });
+
+    [group1Display, group2Display, group3Display].forEach((display) => {
+      display.className = 'color-box';
+      display.removeAttribute('style');
+    });
+
+  }
+
+  window.resetForm = resetForm;
+});
 
