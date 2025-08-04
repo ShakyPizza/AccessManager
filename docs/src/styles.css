@@ -42,6 +42,13 @@ select {
 
 .door-list {
   margin-top: 0;
+  display: flex;
+  gap: 20px;
+  width: 900px;
+}
+
+.door-group {
+  flex: 1;
 }
 
 .door-list ul {
