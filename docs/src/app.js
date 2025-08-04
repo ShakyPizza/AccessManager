@@ -105,5 +105,5 @@ function init() {
   }
 
   window.resetForm = resetForm;
-});
+};
 
