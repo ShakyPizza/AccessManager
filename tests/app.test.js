@@ -1,4 +1,4 @@
-import { updateColor } from '../src/updateColor.js';
+import { updateColor } from '../docs/src/updateColor.js';
 
 describe('updateColor', () => {
   test('sets provided color on element', () => {

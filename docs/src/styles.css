@@ -44,6 +44,10 @@ select {
   margin-top: 0;
 }
 
+.door-group {
+  margin-bottom: 20px;
+}
+
 .door-list ul {
   list-style: none;
   padding: 0;
