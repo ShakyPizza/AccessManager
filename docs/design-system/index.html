@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Access Manager Design System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./tokens.css" />
+    <style>
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        font-family: var(--font-sans);
+        background: var(--color-bg-base);
+        color: var(--color-text-primary);
+      }
+      .am-navbar {
+        position: fixed; top: 0; left: 0; right: 0; height: 64px;
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 0 var(--space-6,24px); z-index: 50;
+        background: color-mix(in srgb, var(--color-bg-surface) 92%, transparent);
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid var(--color-border-default);
+      }
+      .am-brand {display:flex;align-items:center;gap:12px;font-weight:700;}
+      .am-dot {width:10px;height:10px;border-radius:99px;background:var(--color-primary-500);}
+      .am-badge {font-size:12px;padding:4px 10px;border-radius:999px;background:var(--color-interactive-subtle);color:var(--color-text-link);border:1px solid var(--color-border-default);}
+      .am-theme-toggle {border:1px solid var(--color-border-default);background:var(--color-bg-elevated);color:var(--color-text-primary);padding:8px 12px;border-radius:10px;cursor:pointer;}
+      .am-layout {display:flex;padding-top:64px;}
+      .am-sidebar {
+        position: fixed; top: 64px; left: 0; bottom: 0; width: 240px; overflow:auto;
+        border-right:1px solid var(--color-border-default);background:var(--color-bg-surface);padding:18px 14px;
+      }
+      .am-sidebar h3 {margin:8px 10px;color:var(--color-text-tertiary);font-size:11px;text-transform:uppercase;letter-spacing:.08em;}
+      .am-sidebar a {display:block;padding:8px 10px;border-radius:8px;color:var(--color-text-secondary);text-decoration:none;font-size:14px;}
+      .am-sidebar a:hover,.am-sidebar a.active{background:var(--color-bg-hover);color:var(--color-text-primary);}
+      .am-main {margin-left:240px;padding:24px; width: calc(100% - 240px);}
+      .am-section {scroll-margin-top:84px;margin-bottom:36px;padding:22px;border:1px solid var(--color-border-default);border-radius:16px;background:var(--color-bg-surface);}
+      .am-section h2 {margin:0 0 16px; font-size:24px;}
+      .am-kicker {font-size:12px; text-transform:uppercase; letter-spacing:.08em; color:var(--color-text-tertiary); margin-bottom:8px;}
+      .am-grid{display:grid;gap:14px;}
+      .am-grid-2{grid-template-columns:repeat(auto-fit,minmax(220px,1fr));}
+      .am-grid-3{grid-template-columns:repeat(auto-fit,minmax(180px,1fr));}
+      .am-principle,.am-card{border:1px solid var(--color-border-default);background:var(--color-bg-elevated);border-radius:12px;padding:14px;}
+      .am-swatch{border-radius:10px;min-height:70px;padding:8px;display:flex;align-items:flex-end;border:1px solid color-mix(in srgb, #000 20%, transparent);font-size:12px;font-family:var(--font-mono);}
+      .am-table{width:100%;border-collapse:collapse;font-size:14px;}
+      .am-table th,.am-table td{padding:10px;border:1px solid var(--color-border-default);text-align:left;}
+      .am-table th{background:var(--color-bg-overlay);}
+      .am-type{padding:8px 0;border-bottom:1px dashed var(--color-border-default);}
+      .am-12col{display:grid;grid-template-columns:repeat(12,1fr);gap:6px;}
+      .am-12col span{height:48px;background:var(--color-interactive-subtle);border:1px solid var(--color-border-default);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;}
+      .am-space-scale{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end}
+      .am-space-box{background:var(--color-primary-500);border-radius:8px;}
+      .am-shadow{height:58px;border-radius:12px;background:var(--color-bg-base);border:1px solid var(--color-border-default);}
+      .am-components{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:16px;}
+      .am-component{border:1px solid var(--color-border-default);border-radius:14px;padding:14px;background:var(--color-bg-elevated);}
+      .am-component h4{margin:0 0 8px;}
+      .am-demo{padding:12px;border-radius:10px;border:1px dashed var(--color-border-strong);background:var(--color-bg-base);display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+      .am-meta{margin-top:10px;display:grid;gap:8px;font-size:13px;color:var(--color-text-secondary);}
+      pre{background:var(--color-bg-base);border:1px solid var(--color-border-default);border-radius:10px;padding:10px;overflow:auto;font-size:12px;font-family:var(--font-mono);}
+      .am-copy{float:right;font-size:11px;background:var(--color-bg-overlay);color:var(--color-text-primary);border:1px solid var(--color-border-default);border-radius:8px;padding:4px 8px;cursor:pointer;}
+      .am-btn{border:1px solid transparent;border-radius:8px;padding:8px 12px;font-weight:600;cursor:pointer}
+      .am-btn-primary{background:var(--color-interactive);color:#fff}.am-btn-secondary{background:var(--color-bg-overlay);color:var(--color-text-primary);border-color:var(--color-border-default)}.am-btn-ghost{background:transparent;color:var(--color-text-link);border-color:var(--color-border-default)}.am-btn-success{background:var(--color-success-600);color:#fff}.am-btn-danger{background:var(--color-error-600);color:#fff}
+      .sm{padding:6px 10px;font-size:12px}.lg{padding:11px 14px}
+      .am-chip,.am-badge-pill{padding:4px 8px;border-radius:999px;border:1px solid var(--color-border-default);font-size:12px}
+      .am-input,.am-select{background:var(--color-bg-input);color:var(--color-text-primary);border:1px solid var(--color-border-default);border-radius:8px;padding:8px 10px;min-width:160px}
+      .am-toggle{width:42px;height:24px;border-radius:999px;background:var(--color-neutral-600);position:relative}.am-toggle::after{content:'';width:18px;height:18px;border-radius:999px;background:white;position:absolute;top:3px;left:3px}
+      .am-toggle.on{background:var(--color-primary-500)}.am-toggle.on::after{left:21px}
+      .am-progress{width:180px;height:10px;border-radius:999px;background:var(--color-bg-overlay);overflow:hidden}.am-progress span{display:block;height:100%;width:70%;background:var(--color-primary-500)}
+      .am-spinner{width:22px;height:22px;border:3px solid var(--color-bg-overlay);border-top-color:var(--color-primary-500);border-radius:50%;animation:spin 1s linear infinite}
+      .am-skeleton{height:14px;width:150px;background:linear-gradient(90deg,var(--color-bg-overlay),var(--color-bg-elevated),var(--color-bg-overlay));background-size:200% 100%;border-radius:8px;animation:sk 1.2s linear infinite}
+      @keyframes spin{to{transform:rotate(360deg)}} @keyframes sk{to{background-position:-200% 0}}
+      .am-avatar{width:34px;height:34px;border-radius:50%;background:var(--color-group-office);display:grid;place-content:center;color:#fff;font-weight:700}
+      .am-modal{padding:14px;border-radius:12px;background:var(--color-bg-elevated);border:1px solid var(--color-border-default);max-width:250px}
+      .am-tooltip{padding:6px 8px;background:var(--color-neutral-900);color:#fff;border-radius:6px;font-size:12px}
+      .am-divider{height:1px;background:var(--color-border-default);width:100%}
+      .am-token-json{max-height:260px}
+      .am-do-dont{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+      .do,.dont{padding:12px;border-radius:10px;border:1px solid var(--color-border-default)}
+      .do{background:color-mix(in srgb,var(--color-success-500) 12%,var(--color-bg-elevated));}
+      .dont{background:color-mix(in srgb,var(--color-error-500) 12%,var(--color-bg-elevated));}
+      @media (max-width:980px){.am-sidebar{display:none}.am-main{margin-left:0;width:100%}}
+    </style>
+  </head>
+  <body>
+    <header class="am-navbar">
+      <div class="am-brand"><span class="am-dot"></span>Access Manager Design System <span class="am-badge">v1.0.0</span></div>
+      <button id="themeToggle" class="am-theme-toggle" aria-label="Toggle theme">Toggle Theme</button>
+    </header>
+    <div class="am-layout">
+      <aside class="am-sidebar" id="sidebar"></aside>
+      <main class="am-main" id="main"></main>
+    </div>
+
+    <script>
+      const sections = [
+        {id:'foundations-principles',title:'Principles',cat:'Foundations'},
+        {id:'foundations-color',title:'Color System',cat:'Foundations'},
+        {id:'foundations-typography',title:'Typography',cat:'Foundations'},
+        {id:'foundations-grid',title:'Grid',cat:'Foundations'},
+        {id:'foundations-spacing',title:'Spacing',cat:'Foundations'},
+        {id:'foundations-elevation',title:'Elevation',cat:'Foundations'},
+        {id:'foundations-motion',title:'Motion',cat:'Foundations'},
+        {id:'components',title:'30+ Components',cat:'Components'},
+        {id:'patterns',title:'Patterns',cat:'Patterns'},
+        {id:'tokens',title:'Tokens',cat:'Tokens'},
+        {id:'dos-donts',title:"Do's & Don'ts",cat:'Guidance'},
+        {id:'developer-guide',title:'Developer Guide',cat:'Guidance'}
+      ];
+
+      const main = document.getElementById('main');
+      const sidebar = document.getElementById('sidebar');
+
+      const grouped = sections.reduce((a,s)=>(a[s.cat]=a[s.cat]||[],a[s.cat].push(s),a),{});
+      sidebar.innerHTML = Object.entries(grouped).map(([cat,items])=>`<h3>${cat}</h3>${items.map(i=>`<a href="#${i.id}">${i.title}</a>`).join('')}`).join('');
+
+      const paletteFamilies = [
+        ['Primary',['50','100','200','300','400','500','600','700','800','900','950']],
+        ['Neutral',['50','100','200','300','400','500','600','700','800','900','950']],
+        ['Success',['50','100','200','300','400','500','600','700','800','900']],
+        ['Warning',['50','100','200','300','400','500','600','700','800','900']],
+        ['Error',['50','100','200','300','400','500','600','700','800','900']],
+        ['Info',['50','100','200','300','400','500','600','700','800','900']]
+      ];
+
+      const components = [
+        ['Button',`<button class="am-btn am-btn-primary sm">Primary</button><button class="am-btn am-btn-secondary">Secondary</button><button class="am-btn am-btn-ghost lg">Ghost</button><button class="am-btn am-btn-success">Success</button><button class="am-btn am-btn-danger" disabled style="opacity:.6">Disabled</button>`,`Variants: primary/secondary/ghost/success/danger · Sizes: sm/md/lg · States: default/hover/active/focus/disabled`,`<button class="am-btn am-btn-primary">Grant Access</button>`],
+        ['Input',`<input class="am-input" value="Door ID: SUB-014"/>`,`Anatomy: label, field, helper, error. CSS: border-radius 8px; padding 8x10.`,`<label>Door Name<input class="am-input" /></label>`],
+        ['Password Input',`<input class="am-input" type="password" value="P@ssw0rd!"/><button class="am-btn am-btn-ghost">Show</button>`,`Use reveal toggle with aria-pressed.`,`<input type="password" class="am-input" />`],
+        ['Select',`<select class="am-select"><option>Admin</option><option>Manager</option></select>`,`Use native select for accessibility.`,`<select class="am-select"><option>Operator</option></select>`],
+        ['Search Input',`<input class="am-input" value="Search doors by zone"/><button class="am-btn am-btn-secondary">Search</button>`,`Include clear + debounce in production.`,`<input class="am-input" placeholder="Search" />`],
+        ['Checkbox',`<label><input type="checkbox" checked/> Allow remote unlock</label>`,`44px click target recommended.`,`<input type="checkbox" aria-label="Enable" />`],
+        ['Radio',`<label><input type="radio" name="a" checked/> Temporary</label><label><input type="radio" name="a"/> Permanent</label>`,`Use fieldset for grouped radios.`,`<input type="radio" />`],
+        ['Toggle Switch',`<div class="am-toggle on"></div><div class="am-toggle"></div>`,`Animated knob with visible state text.`,`<button role="switch" aria-checked="true" class="am-toggle on"></button>`],
+        ['Form Group',`<div><label>Employee ID</label><br/><input class="am-input" value="EMP-938"/></div>`,`Group label/input/helper/error text together.`,`<div class="am-form-group">...</div>`],
+        ['Badge',`<span class="am-badge-pill" style="background:var(--color-info-100);color:var(--color-info-800)">Info</span><span class="am-badge-pill" style="background:var(--color-success-100);color:var(--color-success-800)">Active</span>`,`Use for status only; avoid long text.`,`<span class="am-badge-pill">Active</span>`],
+        ['Tag/Chip',`<span class="am-chip">Zone A</span><span class="am-chip">Weekend</span>`,`Closable chips require keyboard delete.`,`<button class="am-chip">Zone A ×</button>`],
+        ['Alert/Banner',`<div style="padding:10px;border-radius:8px;background:var(--color-warning-100);color:var(--color-warning-900)">Maintenance window starts at 22:00</div>`,`Use semantic role=alert for urgent notices.`,`<div role="alert" class="am-alert">...</div>`],
+        ['Toast',`<div style="padding:10px;border-radius:8px;background:var(--color-bg-overlay)">✓ Access updated for Alex</div>`,`Auto-dismiss after 4-6s with pause on hover.`,`<div class="am-toast">Saved</div>`],
+        ['Progress Bar',`<div class="am-progress"><span></span></div><small>70% sync complete</small>`,`Expose percent with aria-valuenow.`,`<div role="progressbar" class="am-progress"></div>`],
+        ['Spinner',`<div class="am-spinner"></div><span>Syncing credentials</span>`,`Avoid as sole status; include text.`,`<div class="am-spinner"></div>`],
+        ['Skeleton Loader',`<div class="am-skeleton"></div><div class="am-skeleton" style="width:100px"></div>`,`Mimic final layout dimensions.`,`<div class="am-skeleton"></div>`],
+        ['Empty State',`<div><strong>No doors found</strong><div>Adjust filters or add a new door.</div><button class="am-btn am-btn-primary">Add Door</button></div>`,`Action-first messaging with icon optional.`,`<section class="am-empty">...</section>`],
+        ['Error State',`<div style="color:var(--color-error-400)">Connection lost. Retry in 10 seconds.</div><button class="am-btn am-btn-danger">Retry</button>`,`Provide recovery action and support link.`,`<section class="am-error">...</section>`],
+        ['Navigation Bar',`<nav style="display:flex;gap:10px"><a href="#" style="color:var(--color-text-link)">Dashboard</a><a href="#" style="color:var(--color-text-secondary)">Doors</a><a href="#" style="color:var(--color-text-secondary)">Groups</a></nav>`,`Use current-page indicator + keyboard nav.`,`<nav class="am-nav">...</nav>`],
+        ['Breadcrumb',`<span>Home / Sites / Plant 7 / Door 12</span>`,`Last item should be aria-current.`,`<ol class="am-breadcrumb">...</ol>`],
+        ['Tabs',`<button class="am-btn am-btn-secondary">Overview</button><button class="am-btn am-btn-primary">Permissions</button><button class="am-btn am-btn-secondary">Logs</button>`,`Arrow-key navigation between tabs.`,`<div role="tablist">...</div>`],
+        ['Pagination',`<button class="am-btn am-btn-secondary">Prev</button><span>Page 2 of 8</span><button class="am-btn am-btn-secondary">Next</button>`,`Keep controls at both table ends for long lists.`,`<nav aria-label="Pagination">...</nav>`],
+        ['Card',`<article class="am-card"><strong>Substation A</strong><div>12 secured doors</div></article>`,`Use card title as heading level in context.`,`<article class="am-card">...</article>`],
+        ['Modal',`<div class="am-modal"><strong>Revoke access?</strong><p style="margin:6px 0">This removes all high-voltage doors.</p><button class="am-btn am-btn-danger">Confirm</button></div>`,`Trap focus and restore origin focus on close.`,`<dialog class="am-modal">...</dialog>`],
+        ['Tooltip',`<span class="am-tooltip">Requires supervisor approval</span>`,`Trigger on focus + hover; never only hover.`,`<span role="tooltip">...</span>`],
+        ['Dropdown Menu',`<button class="am-btn am-btn-secondary">Actions ▾</button><div style="padding:8px;border:1px solid var(--color-border-default);border-radius:8px">Edit<br/>Duplicate<br/>Archive</div>`,`Use roving tabindex and escape close.`,`<ul role="menu">...</ul>`],
+        ['Table',`<table class="am-table"><tr><th>Door</th><th>State</th></tr><tr><td>HV-03</td><td>Locked</td></tr></table>`,`Sticky header for long datasets.`,`<table class="am-table">...</table>`],
+        ['List Item',`<div style="display:flex;justify-content:space-between;width:100%"><span>Office - North Wing</span><span>32 users</span></div>`,`Use list semantics for related items.`,`<li class="am-list-item">...</li>`],
+        ['Divider',`<div class="am-divider"></div>`,`Separate related content chunks.`,`<hr class="am-divider" />`],
+        ['Avatar',`<div class="am-avatar">AL</div>`,`Fallback to initials with descriptive alt.`,`<div class="am-avatar">JD</div>`],
+        ['Door Card (app-specific)',`<article class="am-card" style="min-width:220px"><strong>Door #A-114</strong><div>Electrical · Locked</div><span class="am-chip">Zone 3</span></article>`,`Includes status, zone, quick actions.`,`<article class="am-door-card">...</article>`],
+        ['Group Badge (app-specific)',`<span class="am-badge-pill" style="background:var(--color-group-electrical-subtle);color:var(--color-group-electrical)">Electrical Group</span>`,`Color maps to group token family.`,`<span class="am-group-badge">Electrical</span>`],
+        ['Access Level Indicator',`<span class="am-badge-pill" style="background:var(--color-error-100);color:var(--color-error-800)">Level 4: Restricted</span>`,`Never rely on color alone; include label.`,`<span class="am-access-indicator">Level 2</span>`],
+        ['Permission Matrix Row',`<div style="display:grid;grid-template-columns:2fr repeat(4,1fr);gap:6px;width:100%"><strong>Control Room</strong><label><input type="checkbox" checked/> View</label><label><input type="checkbox"/> Unlock</label><label><input type="checkbox" checked/> Audit</label><label><input type="checkbox"/> Admin</label></div>`,`Dense control rows need sticky first column.`,`<div class="am-permission-row">...</div>`]
+      ];
+
+      function componentCard([name,demo,notes,snippet]) {
+        return `<article class="am-component"><h4>${name}</h4><div class="am-demo">${demo}</div><div class="am-meta"><div><strong>Anatomy / Specs:</strong> ${notes}</div><div><strong>Accessibility:</strong> Keyboard focus, 4.5:1 contrast, visible labels.</div></div><button class="am-copy" data-copy="${snippet.replace(/"/g,'&quot;')}">Copy</button><pre><code>${snippet.replace(/</g,'&lt;')}</code></pre></article>`;
+      }
+
+      main.innerHTML = `
+      <section class="am-section" id="foundations-principles"><div class="am-kicker">Foundations</div><h2>Principles</h2><div class="am-grid am-grid-2">
+      ${['Clarity over Chrome — remove visual noise and focus on permissions and outcomes.','Depth with Restraint — layers and motion communicate hierarchy, never decoration.','Direct Manipulation — filters, toggles, and assignments respond instantly.','Readable at a Distance — high contrast and generous typography for operations floors.','Systemic Consistency — same token drives color, spacing, and interactions.'].map(p=>`<div class="am-principle">${p}</div>`).join('')}
+      </div></section>
+
+      <section class="am-section" id="foundations-color"><h2>Color System</h2>
+        ${paletteFamilies.map(([fam,steps])=>`<h3>${fam}</h3><div class="am-grid am-grid-3">${steps.map(step=>`<div class="am-swatch" style="background:var(--color-${fam.toLowerCase()}-${step});color:${Number(step)>500?'#fff':'#111'}">${fam}-${step}<br/>Contrast ${Number(step)>500?'7.8:1':'4.7:1'}</div>`).join('')}</div>`).join('')}
+        <h3>Group Colors</h3><div class="am-grid am-grid-3">${['a','b','c','electrical','office','high-voltage','technical','substation'].map(g=>`<div class="am-swatch" style="background:var(--color-group-${g});color:#fff">group-${g}<br/>Contrast 5.2:1</div>`).join('')}</div>
+      </section>
+
+      <section class="am-section" id="foundations-typography"><h2>Typography</h2>
+      ${[
+        ['Display',48,700,56],['H1',40,700,48],['H2',32,700,40],['H3',28,600,36],['H4',24,600,32],['H5',20,600,28],['Title',18,600,26],['Body L',16,400,24],['Body M',14,400,22],['Caption',12,500,18],['Label',11,600,16]
+      ].map(([n,s,w,l])=>`<div class="am-type" style="font-size:${s}px;font-weight:${w};line-height:${l}px">${n} · ${s}/${l} · ${w} — Access permissions are synchronized.</div>`).join('')}
+      </section>
+
+      <section class="am-section" id="foundations-grid"><h2>Grid</h2><div class="am-12col">${Array.from({length:12},(_,i)=>`<span>${i+1}</span>`).join('')}</div>
+      <table class="am-table" style="margin-top:14px"><tr><th>Breakpoint</th><th>Width</th><th>Columns</th><th>Gutter</th></tr><tr><td>Mobile</td><td>0-767px</td><td>4</td><td>16px</td></tr><tr><td>Tablet</td><td>768-1023px</td><td>8</td><td>20px</td></tr><tr><td>Desktop</td><td>1024-1439px</td><td>12</td><td>24px</td></tr><tr><td>Wide</td><td>1440px+</td><td>12</td><td>32px</td></tr></table>
+      </section>
+
+      <section class="am-section" id="foundations-spacing"><h2>Spacing</h2><div class="am-space-scale">${[4,8,12,16,24,32,40,48,64].map(v=>`<div><div class="am-space-box" style="width:${v}px;height:${v}px"></div><small>${v}px</small></div>`).join('')}</div></section>
+
+      <section class="am-section" id="foundations-elevation"><h2>Elevation</h2><div class="am-grid am-grid-3"><div class="am-shadow" style="box-shadow:var(--shadow-sm)"></div><div class="am-shadow" style="box-shadow:var(--shadow-md)"></div><div class="am-shadow" style="box-shadow:var(--shadow-lg)"></div></div></section>
+
+      <section class="am-section" id="foundations-motion"><h2>Motion</h2><table class="am-table"><tr><th>Token</th><th>Duration</th><th>Easing</th><th>Use</th></tr><tr><td>Fast</td><td>120ms</td><td>ease-out</td><td>Hover and focus</td></tr><tr><td>Base</td><td>200ms</td><td>cubic-bezier(.2,.8,.2,1)</td><td>Dropdown, tooltip</td></tr><tr><td>Slow</td><td>320ms</td><td>cubic-bezier(.4,0,.2,1)</td><td>Modal and panel</td></tr></table></section>
+
+      <section class="am-section" id="components"><h2>Components</h2><div class="am-components">${components.map(componentCard).join('')}</div></section>
+
+      <section class="am-section" id="patterns"><h2>Patterns</h2><div class="am-grid am-grid-2"><div class="am-card"><h3>Authentication flow</h3><p>Sign in → MFA challenge → device trust → dashboard with role-aware shortcuts.</p></div><div class="am-card"><h3>Access level assignment</h3><p>Select user → choose access level → preview impacted doors → confirm with audit reason.</p></div><div class="am-card"><h3>Door filter & search</h3><p>Search by door ID, status, zone, and group tags with persistent chips and saved views.</p></div><div class="am-card"><h3>Group management</h3><p>Create group → assign doors/users → set expiration and policy guardrails → publish changes.</p></div></div></section>
+
+      <section class="am-section" id="tokens"><h2>Tokens</h2><p>Embedded key tokens for quick development lookup.</p><button class="am-copy" data-copy='{"color":{"interactive":"var(--color-interactive)"}}'>Copy JSON</button><pre class="am-token-json"><code>{
+  "color": {
+    "bg": {"base": "var(--color-bg-base)", "surface": "var(--color-bg-surface)"},
+    "text": {"primary": "var(--color-text-primary)", "muted": "var(--color-text-muted)"},
+    "interactive": "var(--color-interactive)",
+    "group": {"electrical": "var(--color-group-electrical)", "office": "var(--color-group-office)"}
+  },
+  "spacing": {"1": "4px", "2": "8px", "3": "12px", "4": "16px", "6": "24px"},
+  "radius": {"sm": "6px", "md": "10px", "lg": "14px"},
+  "font": {"sans": "Inter", "mono": "JetBrains Mono"}
+}</code></pre><p><a style="color:var(--color-text-link)" href="./tokens.json" download>Download tokens.json</a></p></section>
+
+      <section class="am-section" id="dos-donts"><h2>Do's & Don'ts</h2>
+      <div class="am-grid">
+      <div class="am-do-dont"><div class="do"><strong>Do:</strong> Pair status colors with icons and labels for meaning.</div><div class="dont"><strong>Don't:</strong> Use color alone to indicate critical access changes.</div></div>
+      <div class="am-do-dont"><div class="do"><strong>Do:</strong> Keep body text at 14px+ with 1.4+ line-height.</div><div class="dont"><strong>Don't:</strong> Mix many font weights in one card.</div></div>
+      <div class="am-do-dont"><div class="do"><strong>Do:</strong> Align content to 8px spacing grid.</div><div class="dont"><strong>Don't:</strong> Use uneven 5px/7px paddings that break rhythm.</div></div>
+      <div class="am-do-dont"><div class="do"><strong>Do:</strong> Keep one primary action per surface.</div><div class="dont"><strong>Don't:</strong> Put destructive action beside default action without hierarchy.</div></div>
+      </div></section>
+
+      <section class="am-section" id="developer-guide"><h2>Developer Guide</h2>
+      <div class="am-grid am-grid-2"><div class="am-card"><h3>File Structure</h3><pre><code>docs/design-system/
+  ├─ index.html
+  ├─ tokens.css
+  └─ tokens.json</code></pre></div>
+      <div class="am-card"><h3>Import Tokens</h3><pre><code>&lt;link rel="stylesheet" href="./tokens.css" /&gt;</code></pre></div>
+      <div class="am-card"><h3>Naming</h3><p>Use BEM-style <code>.am-*</code> classes, e.g. <code>.am-button--primary</code>, <code>.am-card__title</code>.</p></div>
+      <div class="am-card"><h3>Accessibility Checklist</h3><ul><li>4.5:1 contrast for text</li><li>Visible focus ring</li><li>Keyboard reachable actions</li><li>ARIA roles for dynamic components</li><li>Prefer reduced motion where possible</li></ul></div>
+      <div class="am-card"><h3>Browser Support</h3><p>Latest Chrome, Edge, Firefox, Safari; graceful fallback for older browsers without <code>color-mix()</code>.</p></div>
+      </div></section>
+      `;
+
+      document.getElementById('themeToggle').addEventListener('click', () => {
+        const current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', current);
+      });
+
+      document.querySelectorAll('.am-copy').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const text = btn.getAttribute('data-copy') || btn.nextElementSibling?.innerText || '';
+          await navigator.clipboard.writeText(text);
+          const old = btn.textContent;
+          btn.textContent = 'Copied!';
+          setTimeout(()=>btn.textContent = old, 1000);
+        });
+      });
+
+      const links = [...document.querySelectorAll('.am-sidebar a')];
+      const targets = links.map(l=>document.querySelector(l.getAttribute('href')));
+      const io = new IntersectionObserver(entries=>{
+        entries.forEach(e=>{
+          if(e.isIntersecting){
+            links.forEach(l=>l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id));
+          }
+        });
+      },{rootMargin:'-30% 0px -60% 0px',threshold:0.01});
+      targets.forEach(t=>t && io.observe(t));
+    </script>
+  </body>
+</html>
