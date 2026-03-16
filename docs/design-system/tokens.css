@@ -1,0 +1,469 @@
+/*
+ * Access Manager Design System — CSS Custom Properties
+ * Version: 1.0.0  |  Updated: 2026-03-16
+ *
+ * Usage:
+ *   @import './tokens.css';
+ *   .my-element { background: var(--color-bg-surface); color: var(--color-text-primary); }
+ *
+ * Token naming convention:
+ *   --{category}-{subcategory}-{variant}
+ *   e.g. --color-primary-500, --color-bg-surface, --space-4, --radius-lg
+ */
+
+/* ============================================================
+   FONT IMPORT
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* ============================================================
+   CORE PALETTE — Raw color values (scale 50–950)
+   ============================================================ */
+:root {
+  /* Primary — Blue */
+  --color-primary-50:  #eff6ff;
+  --color-primary-100: #dbeafe;
+  --color-primary-200: #bfdbfe;
+  --color-primary-300: #93c5fd;
+  --color-primary-400: #60a5fa;
+  --color-primary-500: #3b82f6;
+  --color-primary-600: #2563eb;
+  --color-primary-700: #1d4ed8;
+  --color-primary-800: #1e40af;
+  --color-primary-900: #1e3a8a;
+  --color-primary-950: #172554;
+
+  /* Neutral — Slate */
+  --color-neutral-50:  #f8fafc;
+  --color-neutral-100: #f1f5f9;
+  --color-neutral-200: #e2e8f0;
+  --color-neutral-300: #cbd5e1;
+  --color-neutral-400: #94a3b8;
+  --color-neutral-500: #64748b;
+  --color-neutral-600: #475569;
+  --color-neutral-700: #334155;
+  --color-neutral-800: #1e293b;
+  --color-neutral-900: #0f172a;
+  --color-neutral-950: #020617;
+
+  /* Success — Green */
+  --color-success-50:  #f0fdf4;
+  --color-success-100: #dcfce7;
+  --color-success-200: #bbf7d0;
+  --color-success-300: #86efac;
+  --color-success-400: #4ade80;
+  --color-success-500: #22c55e;
+  --color-success-600: #16a34a;
+  --color-success-700: #15803d;
+  --color-success-800: #166534;
+  --color-success-900: #14532d;
+
+  /* Warning — Amber */
+  --color-warning-50:  #fffbeb;
+  --color-warning-100: #fef3c7;
+  --color-warning-200: #fde68a;
+  --color-warning-300: #fcd34d;
+  --color-warning-400: #fbbf24;
+  --color-warning-500: #f59e0b;
+  --color-warning-600: #d97706;
+  --color-warning-700: #b45309;
+  --color-warning-800: #92400e;
+  --color-warning-900: #78350f;
+
+  /* Error — Red */
+  --color-error-50:  #fef2f2;
+  --color-error-100: #fee2e2;
+  --color-error-200: #fecaca;
+  --color-error-300: #fca5a5;
+  --color-error-400: #f87171;
+  --color-error-500: #ef4444;
+  --color-error-600: #dc2626;
+  --color-error-700: #b91c1c;
+  --color-error-800: #991b1b;
+  --color-error-900: #7f1d1d;
+
+  /* Info — Cyan */
+  --color-info-50:  #ecfeff;
+  --color-info-100: #cffafe;
+  --color-info-200: #a5f3fc;
+  --color-info-300: #67e8f9;
+  --color-info-400: #22d3ee;
+  --color-info-500: #06b6d4;
+  --color-info-600: #0891b2;
+  --color-info-700: #0e7490;
+  --color-info-800: #155e75;
+  --color-info-900: #164e63;
+
+  /* Access Group Colors */
+  --color-group-a:                 #f59e0b;
+  --color-group-a-subtle:          rgba(245, 158, 11, 0.15);
+  --color-group-a-dark:            #b45309;
+  --color-group-b:                 #8b5cf6;
+  --color-group-b-subtle:          rgba(139, 92, 246, 0.15);
+  --color-group-b-dark:            #5b21b6;
+  --color-group-c:                 #f97316;
+  --color-group-c-subtle:          rgba(249, 115, 22, 0.15);
+  --color-group-c-dark:            #c2410c;
+  --color-group-electrical:        #3b82f6;
+  --color-group-electrical-subtle: rgba(59, 130, 246, 0.15);
+  --color-group-office:            #22c55e;
+  --color-group-office-subtle:     rgba(34, 197, 94, 0.15);
+  --color-group-high-voltage:      #06b6d4;
+  --color-group-high-voltage-subtle: rgba(6, 182, 212, 0.15);
+  --color-group-technical:         #ef4444;
+  --color-group-technical-subtle:  rgba(239, 68, 68, 0.15);
+  --color-group-substation:        #94a3b8;
+  --color-group-substation-subtle: rgba(148, 163, 184, 0.15);
+}
+
+/* ============================================================
+   SEMANTIC TOKENS — Dark Mode (default / dark-first)
+   ============================================================ */
+:root,
+[data-theme="dark"] {
+  /* Backgrounds */
+  --color-bg-base:     #0f172a;
+  --color-bg-surface:  #1e293b;
+  --color-bg-elevated: #293548;
+  --color-bg-overlay:  #334155;
+  --color-bg-input:    #0f172a;
+  --color-bg-hover:    #1a2540;
+  --color-bg-selected: rgba(59, 130, 246, 0.12);
+  --color-bg-scrim:    rgba(2, 6, 23, 0.75);
+
+  /* Text */
+  --color-text-primary:   #f1f5f9;
+  --color-text-secondary: #e2e8f0;
+  --color-text-tertiary:  #94a3b8;
+  --color-text-muted:     #64748b;
+  --color-text-disabled:  #475569;
+  --color-text-inverse:   #0f172a;
+  --color-text-link:      #60a5fa;
+  --color-text-link-hover:#93c5fd;
+  --color-text-on-accent: #ffffff;
+  --color-text-success:   #4ade80;
+  --color-text-warning:   #fbbf24;
+  --color-text-error:     #f87171;
+  --color-text-info:      #22d3ee;
+
+  /* Borders */
+  --color-border-subtle:  #1a2540;
+  --color-border-default: #334155;
+  --color-border-strong:  #475569;
+  --color-border-focus:   #3b82f6;
+  --color-border-success: #16a34a;
+  --color-border-error:   #dc2626;
+
+  /* Interactive */
+  --color-interactive:            #3b82f6;
+  --color-interactive-hover:      #2563eb;
+  --color-interactive-active:     #1d4ed8;
+  --color-interactive-subtle:     rgba(59, 130, 246, 0.12);
+  --color-interactive-destructive:       #ef4444;
+  --color-interactive-destructive-hover: #dc2626;
+
+  /* Focus ring */
+  --focus-ring: 0 0 0 3px rgba(59, 130, 246, 0.35);
+  --focus-ring-error: 0 0 0 3px rgba(239, 68, 68, 0.35);
+}
+
+/* ============================================================
+   SEMANTIC TOKENS — Light Mode Override
+   ============================================================ */
+[data-theme="light"] {
+  --color-bg-base:     #ffffff;
+  --color-bg-surface:  #f8fafc;
+  --color-bg-elevated: #ffffff;
+  --color-bg-overlay:  #f1f5f9;
+  --color-bg-input:    #ffffff;
+  --color-bg-hover:    #f1f5f9;
+  --color-bg-selected: rgba(37, 99, 235, 0.08);
+  --color-bg-scrim:    rgba(15, 23, 42, 0.60);
+
+  --color-text-primary:   #0f172a;
+  --color-text-secondary: #1e293b;
+  --color-text-tertiary:  #475569;
+  --color-text-muted:     #64748b;
+  --color-text-disabled:  #94a3b8;
+  --color-text-inverse:   #ffffff;
+  --color-text-link:      #2563eb;
+  --color-text-link-hover:#1d4ed8;
+  --color-text-on-accent: #ffffff;
+  --color-text-success:   #15803d;
+  --color-text-warning:   #b45309;
+  --color-text-error:     #b91c1c;
+  --color-text-info:      #0e7490;
+
+  --color-border-subtle:  #f1f5f9;
+  --color-border-default: #e2e8f0;
+  --color-border-strong:  #cbd5e1;
+  --color-border-focus:   #2563eb;
+  --color-border-success: #16a34a;
+  --color-border-error:   #dc2626;
+
+  --color-interactive:            #2563eb;
+  --color-interactive-hover:      #1d4ed8;
+  --color-interactive-active:     #1e40af;
+  --color-interactive-subtle:     rgba(37, 99, 235, 0.08);
+  --color-interactive-destructive:       #dc2626;
+  --color-interactive-destructive-hover: #b91c1c;
+
+  --focus-ring: 0 0 0 3px rgba(37, 99, 235, 0.25);
+  --focus-ring-error: 0 0 0 3px rgba(220, 38, 38, 0.25);
+}
+
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
+:root {
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Courier New', monospace;
+
+  /* Scale */
+  --text-display:     4rem;      /* 64px */
+  --text-display-lg:  3rem;      /* 48px */
+  --text-headline-xl: 2.25rem;   /* 36px */
+  --text-headline-lg: 1.875rem;  /* 30px */
+  --text-headline-md: 1.5rem;    /* 24px */
+  --text-headline-sm: 1.25rem;   /* 20px */
+  --text-body-lg:     1.125rem;  /* 18px */
+  --text-body-md:     1rem;      /* 16px */
+  --text-body-sm:     0.875rem;  /* 14px */
+  --text-caption:     0.75rem;   /* 12px */
+  --text-label:       0.6875rem; /* 11px */
+
+  /* Weights */
+  --font-regular:  400;
+  --font-medium:   500;
+  --font-semibold: 600;
+  --font-bold:     700;
+
+  /* Line heights */
+  --leading-none:    1;
+  --leading-tight:   1.2;
+  --leading-snug:    1.375;
+  --leading-normal:  1.5;
+  --leading-relaxed: 1.625;
+  --leading-loose:   2;
+
+  /* Letter spacing */
+  --tracking-tight:   -0.02em;
+  --tracking-snug:    -0.01em;
+  --tracking-normal:  0em;
+  --tracking-wide:    0.02em;
+  --tracking-wider:   0.05em;
+  --tracking-widest:  0.1em;
+}
+
+/* ============================================================
+   SPACING — 8px base grid
+   ============================================================ */
+:root {
+  --space-0:  0px;
+  --space-px: 1px;
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-7:  28px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-14: 56px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+  --space-40: 160px;
+  --space-48: 192px;
+}
+
+/* ============================================================
+   BORDER RADIUS
+   ============================================================ */
+:root {
+  --radius-none: 0px;
+  --radius-xs:   2px;
+  --radius-sm:   4px;
+  --radius-md:   6px;
+  --radius-lg:   8px;
+  --radius-xl:   12px;
+  --radius-2xl:  16px;
+  --radius-3xl:  24px;
+  --radius-full: 9999px;
+}
+
+/* ============================================================
+   SHADOWS — Dark-mode optimised
+   ============================================================ */
+:root {
+  --shadow-xs:    0 1px 2px rgba(0, 0, 0, 0.30);
+  --shadow-sm:    0 2px 4px rgba(0, 0, 0, 0.32);
+  --shadow-md:    0 4px 12px rgba(0, 0, 0, 0.36);
+  --shadow-lg:    0 8px 24px rgba(0, 0, 0, 0.40);
+  --shadow-xl:    0 16px 48px rgba(0, 0, 0, 0.45);
+  --shadow-2xl:   0 24px 64px rgba(0, 0, 0, 0.50);
+  --shadow-inset: inset 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+
+/* ============================================================
+   MOTION
+   ============================================================ */
+:root {
+  --duration-instant: 50ms;
+  --duration-fast:    100ms;
+  --duration-normal:  200ms;
+  --duration-slow:    300ms;
+  --duration-slower:  500ms;
+  --duration-slowest: 700ms;
+
+  --ease-linear:      linear;
+  --ease-default:     ease;
+  --ease-in:          cubic-bezier(0.4, 0, 1, 1);
+  --ease-out:         cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out:      cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring:      cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ============================================================
+   Z-INDEX SCALE
+   ============================================================ */
+:root {
+  --z-below:    -1;
+  --z-base:     0;
+  --z-raised:   10;
+  --z-dropdown: 100;
+  --z-sticky:   200;
+  --z-overlay:  300;
+  --z-modal:    400;
+  --z-popover:  500;
+  --z-toast:    600;
+  --z-tooltip:  700;
+}
+
+/* ============================================================
+   GRID
+   ============================================================ */
+:root {
+  --grid-columns:    12;
+  --grid-gutter:     24px;
+  --grid-margin:     24px;
+  --grid-margin-sm:  16px;
+  --grid-max-width:  1440px;
+  --content-max:     1200px;
+}
+
+/* ============================================================
+   COMPONENT TOKENS — Button
+   ============================================================ */
+:root {
+  --btn-height-sm:    28px;
+  --btn-height-md:    36px;
+  --btn-height-lg:    44px;
+  --btn-padding-x-sm: 10px;
+  --btn-padding-x-md: 16px;
+  --btn-padding-x-lg: 20px;
+  --btn-radius:       var(--radius-lg);
+  --btn-font-size:    var(--text-body-sm);
+  --btn-font-weight:  var(--font-semibold);
+  --btn-gap:          var(--space-2);
+}
+
+/* ============================================================
+   COMPONENT TOKENS — Input / Form
+   ============================================================ */
+:root {
+  --input-height:    38px;
+  --input-padding-x: 12px;
+  --input-padding-y: 9px;
+  --input-radius:    var(--radius-lg);
+  --input-font-size: var(--text-body-sm);
+  --input-border:    1px solid var(--color-border-default);
+}
+
+/* ============================================================
+   COMPONENT TOKENS — Badge
+   ============================================================ */
+:root {
+  --badge-height-sm:  18px;
+  --badge-height-md:  22px;
+  --badge-height-lg:  26px;
+  --badge-padding-x-sm: 6px;
+  --badge-padding-x-md: 8px;
+  --badge-radius:     var(--radius-full);
+  --badge-font-size:  var(--text-label);
+  --badge-font-weight:var(--font-semibold);
+}
+
+/* ============================================================
+   COMPONENT TOKENS — Card
+   ============================================================ */
+:root {
+  --card-padding:    var(--space-6);
+  --card-padding-sm: var(--space-4);
+  --card-radius:     var(--radius-xl);
+  --card-shadow:     var(--shadow-lg);
+  --card-border:     1px solid var(--color-border-default);
+}
+
+/* ============================================================
+   COMPONENT TOKENS — Modal
+   ============================================================ */
+:root {
+  --modal-padding:   var(--space-8);
+  --modal-radius:    var(--radius-2xl);
+  --modal-shadow:    var(--shadow-xl);
+  --modal-max-width: 560px;
+}
+
+/* ============================================================
+   COMPONENT TOKENS — Avatar
+   ============================================================ */
+:root {
+  --avatar-size-xs: 24px;
+  --avatar-size-sm: 32px;
+  --avatar-size-md: 40px;
+  --avatar-size-lg: 48px;
+  --avatar-size-xl: 64px;
+  --avatar-radius:  var(--radius-full);
+}
+
+/* ============================================================
+   COMPONENT TOKENS — Door Card (App-specific)
+   ============================================================ */
+:root {
+  --door-card-height:    44px;
+  --door-card-padding-x: 12px;
+  --door-card-padding-y: 10px;
+  --door-indicator-size: 10px;
+}
+
+/* ============================================================
+   UTILITY — Reduced motion
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-instant: 0ms;
+    --duration-fast:    0ms;
+    --duration-normal:  0ms;
+    --duration-slow:    0ms;
+    --duration-slower:  0ms;
+    --duration-slowest: 0ms;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE TYPOGRAPHY ADJUSTMENTS
+   ============================================================ */
+@media (max-width: 768px) {
+  :root {
+    --text-display:     2.5rem;   /* 40px on mobile */
+    --text-display-lg:  2rem;     /* 32px */
+    --text-headline-xl: 1.75rem;  /* 28px */
+    --text-headline-lg: 1.5rem;   /* 24px */
+    --text-headline-md: 1.25rem;  /* 20px */
+    --text-headline-sm: 1.125rem; /* 18px */
+  }
+}
