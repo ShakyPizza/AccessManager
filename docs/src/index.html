@@ -8,43 +8,73 @@
 </head>
 <body>
   <script>if (localStorage.getItem("authenticated") !== "true"){ window.location.href = "login.html"; }</script>
-  <div class="container">
-    <h1>Aðgangskerfi</h1>
-
-    <div class="control-group">
-      <label for="group1-select">Aðgangshópur 1:</label>
-      <select id="group1-select"></select>
-      <div id="group1-display" class="color-box"></div>
+  <div id="app">
+    <div class="tab-bar">
+      <button class="tab-btn active" data-tab="tab-list">Listi</button>
+      <button class="tab-btn" data-tab="tab-map">Yfirlit</button>
     </div>
 
-    <div class="control-group">
-      <label for="group2-select">Aðgangshópur 2:</label>
-      <select id="group2-select"></select>
-      <div id="group2-display" class="color-box"></div>
+    <div id="tab-list" class="tab-panel active">
+      <div class="container">
+        <h1>Aðgangskerfi</h1>
+
+        <div class="control-group">
+          <label for="group1-select">Aðgangshópur 1:</label>
+          <select id="group1-select"></select>
+          <div id="group1-display" class="color-box"></div>
+        </div>
+
+        <div class="control-group">
+          <label for="group2-select">Aðgangshópur 2:</label>
+          <select id="group2-select"></select>
+          <div id="group2-display" class="color-box"></div>
+        </div>
+
+        <div class="control-group">
+          <label for="group3-select">Aðgangshópur 3:</label>
+          <select id="group3-select"></select>
+          <div id="group3-display" class="color-box"></div>
+        </div>
+
+        <button type="button" onclick="resetForm()">Endursetja val</button>
+        <a class="docs-link" href="../design-system/index.html">Opna Design System</a>
+      </div>
+
+      <div class="container door-list">
+        <div class="door-group">
+          <h3>Hurðir í A flokki:</h3>
+          <ul id="group-a-only-doors"></ul>
+        </div>
+        <div class="door-group">
+          <h3>Hurðir í B flokki:</h3>
+          <ul id="group-ab-doors"></ul>
+        </div>
+        <div class="door-group">
+          <h3>Hurðir í C flokki:</h3>
+          <ul id="group-abc-doors"></ul>
+        </div>
+      </div>
     </div>
 
-    <div class="control-group">
-      <label for="group3-select">Aðgangshópur 3:</label>
-      <select id="group3-select"></select>
-      <div id="group3-display" class="color-box"></div>
-    </div>
-
-    <button type="button" onclick="resetForm()">Endursetja val</button>
-    <a class="docs-link" href="../design-system/index.html">Opna Design System</a>
-  </div>
-
-  <div class="container door-list">
-    <div class="door-group">
-      <h3>Hurðir í A flokki:</h3>
-      <ul id="group-a-only-doors"></ul>
-    </div>
-    <div class="door-group">
-      <h3>Hurðir í B flokki:</h3>
-      <ul id="group-ab-doors"></ul>
-    </div>
-    <div class="door-group">
-      <h3>Hurðir í C flokki:</h3>
-      <ul id="group-abc-doors"></ul>
+    <div id="tab-map" class="tab-panel">
+      <div class="container swimlane-container">
+        <h1>Yfirlit yfir hurðar</h1>
+        <div class="chip-bar" id="chip-bar"></div>
+        <div class="swimlanes">
+          <div class="swimlane">
+            <h3>A flokkur</h3>
+            <div class="door-cards" id="cards-a-only"></div>
+          </div>
+          <div class="swimlane">
+            <h3>B flokkur</h3>
+            <div class="door-cards" id="cards-ab"></div>
+          </div>
+          <div class="swimlane">
+            <h3>C flokkur</h3>
+            <div class="door-cards" id="cards-abc"></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 

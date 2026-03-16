@@ -15,7 +15,6 @@ body {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  gap: 24px;
   padding: 40px 20px;
 }
 
@@ -254,3 +253,188 @@ input[type="password"]:focus {
 .group-a { background-color: var(--color-group-a); }
 .group-b { background-color: var(--color-group-b); }
 .group-c { background-color: var(--color-group-c); }
+
+/* ── App wrapper ── */
+#app {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* ── Tab bar ── */
+.tab-bar {
+  display: flex;
+  gap: 2px;
+  border-bottom: 1px solid var(--color-border-default);
+  margin-bottom: 16px;
+  align-self: stretch;
+}
+
+.tab-btn {
+  width: auto;
+  padding: 10px 24px;
+  background: transparent;
+  color: var(--color-text-muted);
+  border: none;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  margin-bottom: -1px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.tab-btn:hover {
+  color: var(--color-text-secondary);
+  background: transparent;
+}
+
+.tab-btn:active {
+  transform: none;
+}
+
+.tab-btn.active {
+  color: var(--color-text-primary);
+  border-bottom-color: var(--color-border-focus);
+  background: transparent;
+}
+
+/* ── Tab panels ── */
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+#tab-list.active {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+/* ── Swimlane container ── */
+.swimlane-container {
+  width: 1224px;
+  max-width: calc(100vw - 40px);
+}
+
+.swimlane-container > h1 {
+  margin-bottom: 20px;
+}
+
+/* ── Chip bar ── */
+.chip-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--color-border-default);
+}
+
+.chip {
+  width: auto;
+  padding: 5px 12px 5px 8px;
+  background: var(--color-bg-base);
+  color: var(--color-text-tertiary);
+  border: 1px solid var(--color-border-default);
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+  margin-top: 0;
+}
+
+.chip:hover {
+  color: var(--color-text-secondary);
+  border-color: #475569;
+  background: var(--color-bg-surface);
+  transform: none;
+}
+
+.chip:active {
+  transform: none;
+}
+
+.chip.active {
+  color: var(--color-text-primary);
+  border-color: var(--chip-color, var(--color-border-focus));
+  background: color-mix(in srgb, var(--chip-color, var(--color-border-focus)) 15%, var(--color-bg-base));
+}
+
+.chip-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background-color: var(--chip-color, var(--color-border-focus));
+}
+
+/* ── Swimlanes ── */
+.swimlanes {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.swimlane {
+  background: var(--color-bg-base);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md, 8px);
+  padding: 16px;
+}
+
+.swimlane > h3 {
+  margin-bottom: 12px;
+}
+
+/* ── Door cards ── */
+.door-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.door-card {
+  background: #1a2744;
+  border: 1px solid var(--color-border-default);
+  border-left: 4px solid var(--tier-color, var(--color-border-default));
+  border-radius: var(--radius-sm, 6px);
+  padding: 8px 12px;
+  width: 190px;
+  transition: opacity 0.2s, background 0.15s;
+  cursor: default;
+}
+
+.door-card.dimmed {
+  opacity: 0.18;
+}
+
+.door-card.highlighted {
+  background: var(--color-bg-surface);
+}
+
+.card-name {
+  font-size: 0.77rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+
+.card-groups {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.card-groups span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
