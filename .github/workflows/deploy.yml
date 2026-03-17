@@ -1,0 +1,19 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Inject password hash
+        run: |
+          sed -i "s|__PASSWORD_HASH__|${{ secrets.PASSWORD_HASH }}|g" docs/src/login.js
+
+      # Add your actual deploy steps below (e.g. copy files to server, S3, etc.)
+      # - name: Deploy to hosting
+      #   run: ...
