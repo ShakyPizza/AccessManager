@@ -1,4 +1,4 @@
-const PASSWORD_HASH = '8a00e42690778ab9dbe36593c7722fb03e451fbc81dd14fecea8a4bd977dfd7e';
+const PASSWORD_HASH = '__PASSWORD_HASH__';
 
 async function sha256(str) {
   const buffer = new TextEncoder().encode(str);
