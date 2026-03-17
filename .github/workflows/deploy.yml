@@ -4,9 +4,17 @@ on:
   push:
     branches: [main]
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
 
@@ -14,6 +22,11 @@ jobs:
         run: |
           sed -i "s|__PASSWORD_HASH__|${{ secrets.PASSWORD_HASH }}|g" docs/src/login.js
 
-      # Add your actual deploy steps below (e.g. copy files to server, S3, etc.)
-      # - name: Deploy to hosting
-      #   run: ...
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
